@@ -19,6 +19,6 @@ export default function RootLayout() {
       console.error("Error loading fonts:", error);
     }
     if (fontsLoaded) SplashScreen.hideAsync();
-  }, [error]);  
+  }, [fontsLoaded]);  
   return <Stack screenOptions={{headerShown: false, animation: "ios_from_right"}}/>;
 }
