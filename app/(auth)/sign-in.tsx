@@ -4,7 +4,7 @@ import { Link, router } from "expo-router";
 import React from "react";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
+import * as Sentry from '@sentry/react-native'
 export default function SignIn() {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [form, setForm] = React.useState({ email: "", password: "" });
@@ -20,9 +20,10 @@ export default function SignIn() {
       // Reset form after successful sign-in
       setForm({ email: "", password: "" });
       router.push("/");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Sign-in error:", error);
       alert("Failed to sign in. Please try again.");
+      Sentry.captureEvent(error);
     } finally {
       setIsSubmitting(false);
     }

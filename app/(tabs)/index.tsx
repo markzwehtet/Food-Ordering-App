@@ -2,13 +2,18 @@ import { offers } from "@/constants";
 import { Ionicons } from "@expo/vector-icons";
 import cn from "clsx";
 import React from "react";
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
+import { Button, FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import "../global.css";
 import CartButton from "@/components/CartButton";
-
+import * as Sentry from '@sentry/react-native'
+import { useAuthStore } from "@/store/auth.store";
 export default function Index() {
   const insets = useSafeAreaInsets();
+
+  const {user} = useAuthStore();
+  
+  
   return (
     <View className=" flex-1 bg-white">
       <FlatList
@@ -63,6 +68,9 @@ export default function Index() {
         }}
         contentContainerClassName="pb-4. px-5"
         contentContainerStyle={{ paddingTop: insets.top}}
+        ListFooterComponent={
+          <Button title='Try!' onPress={ () => { Sentry.captureException(new Error('First error')) }}/>
+        }
       />
     </View>
   );
